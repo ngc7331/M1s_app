@@ -11,11 +11,11 @@ void net_init() {
     ui_alert_send(ret ? UI_ALERT_ERROR : UI_ALERT_INFO, buf);
 }
 
-int net_http_request_block(const char *host, uint16_t port, const char *uri, char *buf, int bufsize) {
-    int len;
+int net_http_request_block(const char *host, uint16_t port, const char *uri, char *buf, int *len) {
+    int code;
     m1s_xram_wifi_http_request(host, port, uri);
     do {
         vTaskDelay(1);
-    } while ((len = m1s_xram_wifi_http_response(buf, bufsize)) < 0);
-    return len;
+    } while ((code = m1s_xram_wifi_http_response(buf, len)) == 0);
+    return code;
 }

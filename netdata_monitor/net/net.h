@@ -4,6 +4,6 @@
 #include <m1s_c906_xram_wifi.h>
 
 void net_init();
-int net_http_request_block(const char *host, uint16_t port, const char *uri, char *buf, int bufsize);
+int net_http_request_block(const char *host, uint16_t port, const char *uri, char *buf, int *len);
 
 #endif

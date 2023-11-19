@@ -1,0 +1,1 @@
+COMPONENT_SRCDIRS := . utils ui net netdata_api

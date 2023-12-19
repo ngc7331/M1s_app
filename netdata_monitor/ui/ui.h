@@ -8,6 +8,7 @@
 /* ui */
 extern lv_obj_t *screen;
 void ui_init();
+void ui_task();
 
 /* alert */
 typedef enum {

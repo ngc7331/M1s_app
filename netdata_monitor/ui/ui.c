@@ -1,3 +1,7 @@
+/* FreeRTOS */
+#include <FreeRTOS.h>
+#include <task.h>
+
 #include "../config.h"
 #include "ui.h"
 
@@ -16,6 +20,10 @@ static void net_test_cb(lv_event_t *e) {
 }
 
 void ui_init() {
+    // init lvgl
+    lv_init();
+    lv_port_disp_init();
+    lv_port_indev_init();
     // init display
     dispp = lv_disp_get_default();
     theme = lv_theme_default_init(
@@ -47,4 +55,12 @@ void ui_init() {
     ui_alert_send(UI_ALERT_WARN, "warn test");
     ui_alert_send(UI_ALERT_ERROR, "error test");
 #endif
+}
+
+void ui_task() {
+    while (1) {
+        lv_task_handler();
+        vTaskDelay(1);
+    }
+    vTaskDelete(NULL);
 }

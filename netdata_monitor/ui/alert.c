@@ -19,7 +19,8 @@ void ui_alert_init() {
     /* init lvgl label */
     alert_window = lv_label_create(screen);
     // text style
-    lv_obj_set_width(alert_window, LV_SIZE_CONTENT);
+    lv_label_set_long_mode(alert_window, LV_LABEL_LONG_SCROLL_CIRCULAR);
+    lv_obj_set_width(alert_window, 220);
     lv_obj_set_height(alert_window, LV_SIZE_CONTENT);
     lv_obj_set_align(alert_window, LV_ALIGN_CENTER);
     // allow click and register callback fn

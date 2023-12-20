@@ -38,6 +38,7 @@ void net_init() {
 }
 
 int net_http_request_block(const char *host, uint16_t port, const char *uri, char *buf, int *len) {
+    if (!net_ready) return -1;
     int code;
     m1s_xram_wifi_http_request(host, port, uri);
     do {

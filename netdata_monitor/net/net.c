@@ -10,9 +10,9 @@
 static char net_print_buf[NET_PRINT_BUFSIZE];
 
 static int net_ready = 0;
+uint32_t ip = 0;
 
 static void net_init_wait_for_ip() {
-    uint32_t ip;
     while (1) {
         if (net_get_ip_block(&ip, NULL, NULL)) {
             ui_alert_send(UI_ALERT_ERROR, "Get IP failed");

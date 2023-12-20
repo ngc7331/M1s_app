@@ -1,6 +1,5 @@
 #include "../config.h"
 #include "../net/net.h"
-#include "../ui/ui.h"
 #include "api.h"
 
 #define CONCAT(A, B) A##B
@@ -8,6 +7,8 @@
 #define NETDATA_ENDPOINT "/api/v1/data"
 
 #define NETDATA_CHART_LOAD   "system.load"
+#define NETDATA_CHART_CPU    "system.cpu"
+#define NETDATA_CHART_RAM    "system.ram"
 
 #define NETDATA_POINTS "1"
 #define NETDATA_AFTER  "-1"
@@ -37,4 +38,16 @@ static char api_buf[256] = {0};
 // params: loads[3]
 int netdata_get_loads(double *loads) {
     NETDATA_REQUEST(LOAD, 3, "%lf,%lf,%lf", &loads[0], &loads[1], &loads[2]);
+}
+
+// params: guest_nice, guest, steal, softirq, irq, user, system, nice, iowait
+int netdata_get_cpu(double *guest_nice, double *guest, double *steal, double *softirq,
+                    double *irq, double *user, double *system, double *nice, double *iowait) {
+    NETDATA_REQUEST(CPU, 9, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf",
+                    guest_nice, guest, steal, softirq, irq, user, system, nice, iowait);
+}
+
+// params: free, used, buffers, cached
+int netdata_get_ram(double *free, double *used, double *buffers, double *cached) {
+    NETDATA_REQUEST(RAM, 4, "%lf,%lf,%lf,%lf", free, used, buffers, cached);
 }

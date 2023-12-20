@@ -1,7 +1,7 @@
 From fd95a76b356aff0f5b73638d544c1ffc81a19643 Mon Sep 17 00:00:00 2001
 From: ngc7331 <ngc7331@outlook.com>
 Date: Sun, 19 Nov 2023 22:21:03 +0800
-Subject: [PATCH 3/3] feat: parse http response in SDK for e907
+Subject: [PATCH 3/6] feat: parse http response in SDK for e907
 
 - the original http header string will not be passed to c906 core (only http body will be)
 - `m1s_xram_wifi_http_response` returns http status code now (-1 for error, 0 for incomplete request)

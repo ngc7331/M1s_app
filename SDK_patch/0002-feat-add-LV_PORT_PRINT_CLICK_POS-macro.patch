@@ -1,7 +1,7 @@
 From 3391676e0e81fc63a2bb2c7b5036c9abcf4997bf Mon Sep 17 00:00:00 2001
 From: ngc7331 <ngc7331@outlook.com>
 Date: Sun, 19 Nov 2023 19:19:21 +0800
-Subject: [PATCH 2/3] feat: add LV_PORT_PRINT_CLICK_POS macro
+Subject: [PATCH 2/6] feat: add LV_PORT_PRINT_CLICK_POS macro
 
 ---
  components/lvgl/port/lv_port_indev.c | 2 ++

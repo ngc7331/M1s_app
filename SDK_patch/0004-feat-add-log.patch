@@ -1,0 +1,27 @@
+From d561a2c977b7d98d6684b1054eb4c113758055db Mon Sep 17 00:00:00 2001
+From: ngc7331 <ngc7331@outlook.com>
+Date: Tue, 19 Dec 2023 17:36:11 +0800
+Subject: [PATCH 4/6] feat: add log
+
+---
+ components/sipeed/e907/m1s_e907_xram/src/m1s_e907_xram_wifi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/components/sipeed/e907/m1s_e907_xram/src/m1s_e907_xram_wifi.c b/components/sipeed/e907/m1s_e907_xram/src/m1s_e907_xram_wifi.c
+index d6b5b76..f4f7861 100644
+--- a/components/sipeed/e907/m1s_e907_xram/src/m1s_e907_xram_wifi.c
++++ b/components/sipeed/e907/m1s_e907_xram/src/m1s_e907_xram_wifi.c
+@@ -359,6 +359,10 @@ static int xram_wifi_http_request(m1s_xram_wifi_t *op)
+         goto fail;
+     }
+ 
++#ifdef HTTP_REQUEST_ENABLE_LOG
++    printf("xram_wifi_http_request: connecting to %s:%d\r\n", host_ip, op->http_request.port == 0 ? 80 : op->http_request.port);
++#endif
++
+     struct sockaddr_in host_addr;
+     host_addr.sin_family = AF_INET;
+     host_addr.sin_addr.s_addr = inet_addr(host_ip);
+-- 
+2.34.1
+

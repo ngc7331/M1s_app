@@ -10,6 +10,10 @@ extern lv_obj_t *screen;
 void ui_init();
 void ui_task();
 
+/* panel1 */
+void ui_panel1_init();
+void ui_panel1_data_update();
+
 /* alert */
 typedef enum {
     UI_ALERT_INFO,

@@ -1,23 +1,18 @@
+#include <stdio.h>
+
 /* FreeRTOS */
 #include <FreeRTOS.h>
 #include <task.h>
 
 #include "../config.h"
+#include "net/net.h"
 #include "ui.h"
 
 lv_obj_t *screen;
 lv_disp_t *dispp;
 lv_theme_t *theme;
-
-// TODO: remove this
-static void net_test_cb(lv_event_t *e) {
-    void netdata_get_loads(double *);
-    double buf[3];
-    switch (lv_event_get_code(e)) {
-    case LV_EVENT_CLICKED: netdata_get_loads(buf); break;
-    default: return ;
-    }
-}
+static lv_obj_t *ip_label;
+static char ip_buf[20];
 
 void ui_init() {
     // init lvgl
@@ -39,26 +34,41 @@ void ui_init() {
     screen = lv_obj_create(NULL);
     lv_disp_load_scr(screen);
 
+    // init ip label
+    ip_label = lv_label_create(screen);
+    lv_obj_set_width(ip_label, LV_SIZE_CONTENT);
+    lv_obj_set_height(ip_label, LV_SIZE_CONTENT);
+    lv_obj_set_x(ip_label, 10);
+    lv_obj_set_y(ip_label, 5);
+    strncpy(ip_buf, "IP: 0.0.0.0", sizeof(ip_buf));
+    lv_label_set_text_static(ip_label, ip_buf);
+
     // init alert window
     ui_alert_init();
-
-    // TODO: remove these
-    lv_obj_t *btn = lv_btn_create(screen);
-    lv_obj_set_align(btn, LV_ALIGN_CENTER);
-    lv_obj_set_width(btn, 100);
-    lv_obj_set_height(btn, 100);
-    lv_obj_add_event_cb(btn, net_test_cb, LV_EVENT_ALL, NULL);
 
     // tests
 #ifdef DO_UI_ALERT_TEST
     ui_alert_send(UI_ALERT_INFO, "info test");
     ui_alert_send(UI_ALERT_WARN, "warn test");
     ui_alert_send(UI_ALERT_ERROR, "error test");
+    ui_alert_send(UI_ALERT_INFO, "very loooooooooooooooooong info test");
 #endif
+
+    // init panels
+    ui_panel1_init();
+}
+
+static void ui_data_update() {
+    // update ip label
+    snprintf(ip_buf+4, sizeof(ip_buf)-4, "%d.%d.%d.%d", ip & 0xff, (ip >> 8) & 0xff, (ip >> 16) & 0xff, (ip >> 24) & 0xff);
+    lv_label_set_text_static(ip_label, NULL);
+    // update panels
+    ui_panel1_data_update();
 }
 
 void ui_task() {
     while (1) {
+        ui_data_update();
         lv_task_handler();
         vTaskDelay(1);
     }

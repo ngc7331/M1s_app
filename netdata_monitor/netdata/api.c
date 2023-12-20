@@ -10,9 +10,13 @@
 #define NETDATA_CHART_LOAD   "system.load"
 
 #define NETDATA_POINTS "1"
+#define NETDATA_AFTER  "-1"
 #define NETDATA_FORMAT "csv"
 
-#define NETDATA_URI(X) NETDATA_ENDPOINT "?chart=" CONCAT(NETDATA_CHART_, X) "&points=" NETDATA_POINTS "&format=" NETDATA_FORMAT
+#define NETDATA_URI(X) NETDATA_ENDPOINT "?chart=" CONCAT(NETDATA_CHART_, X) \
+                                        "&points=" NETDATA_POINTS \
+                                        "&after=" NETDATA_AFTER \
+                                        "&format=" NETDATA_FORMAT
 
 static char api_buf[256] = {0};
 
